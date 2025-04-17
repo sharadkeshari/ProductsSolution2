@@ -25,7 +25,9 @@ namespace Application.Services
                 Id = p.Id,
                 ProductName = p.ProductName,
                 CreatedBy = p.CreatedBy,
-                CreatedOn = p.CreatedOn
+                CreatedOn = p.CreatedOn,
+                ModifiedOn = p.ModifiedOn,
+                ModifiedBy = p.ModifiedBy ?? ""
             });
         }
 
@@ -66,14 +68,14 @@ namespace Application.Services
             };
         }
 
-        public async Task UpdateProductAsync(int id, CreateProductDto updateDto)
+        public async Task UpdateProductAsync(int id, UpdateProductDto updateDto)
         {
             var product = await _unitOfWork.ProductRepository.GetByIdAsync(id);
             if (product == null)
                 throw new Exception("Product not found");
 
             product.ProductName = updateDto.ProductName;
-            product.ModifiedBy = updateDto.CreatedBy; // Or use a different property if needed.
+            product.ModifiedBy = updateDto.ModifiedBy;
             product.ModifiedOn = DateTime.UtcNow;
 
             _unitOfWork.ProductRepository.Update(product);

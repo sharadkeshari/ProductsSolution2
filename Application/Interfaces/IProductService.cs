@@ -7,7 +7,7 @@ namespace Application.Interfaces
         Task<IEnumerable<ProductDto>> GetAllProductsAsync();
         Task<ProductDto> GetProductByIdAsync(int id);
         Task<ProductDto> CreateProductAsync(CreateProductDto createDto);
-        Task UpdateProductAsync(int id, CreateProductDto updateDto);
+        Task UpdateProductAsync(int id, UpdateProductDto updateDto);
         Task DeleteProductAsync(int id);
     }
 }
