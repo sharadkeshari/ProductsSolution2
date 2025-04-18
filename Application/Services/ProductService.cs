@@ -1,11 +1,7 @@
-﻿using Application.DTOs;
+﻿using Application.DTO;
 using Application.Interfaces;
 using Domain.Entities;
 using Infrastructure.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {

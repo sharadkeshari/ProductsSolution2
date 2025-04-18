@@ -1,16 +1,13 @@
 ﻿using Application.DTO;
-using Application.DTOs;
 using Application.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1.0")]
-   // [Authorize] // Protect endpoints using JWT authentication
+    // [Authorize] // Protect endpoints using JWT authentication
     public class ItemsController : ControllerBase
     {
         private readonly IItemService _itemService;

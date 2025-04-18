@@ -1,6 +1,5 @@
-﻿using FluentValidation;
-using Application.DTOs;
-using Application.DTO;
+﻿using Application.DTO;
+using FluentValidation;
 
 namespace Application.Validators
 {
