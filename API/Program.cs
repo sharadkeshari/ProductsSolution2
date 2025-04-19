@@ -1,3 +1,4 @@
+using API.Filters;
 using API.Middleware;
 using Application.Interfaces;
 using Application.Services;
@@ -35,7 +36,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateProductDtoValidator>(
 // Configure Swagger and have it integrate with the versioned API explorer.
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Products API", Version = "v1" });
+    // options.SwaggerDoc("v1", new OpenApiInfo { Title = "Products API", Version = "v1" });
 
     // Add the Bearer security definition
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -62,20 +63,24 @@ builder.Services.AddSwaggerGen(options =>
             new List<string>() // No specific scopes required for JWT Bearer
         }
     });
+    options.OperationFilter<AddHeaderParameterOperationFilter>(); // Add custom header parameter to all operations
 });
-//adding versioning 
+
 builder.Services.AddApiVersioning(options =>
 {
-    options.ReportApiVersions = true;
     options.AssumeDefaultVersionWhenUnspecified = true;
     options.DefaultApiVersion = new ApiVersion(1, 0);
-    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new UrlSegmentApiVersionReader(),
+        new HeaderApiVersionReader("x-api-version"),
+        new MediaTypeApiVersionReader("x-api-version"),
+        new QueryStringApiVersionReader("x-api-version")
+    );
 });
 builder.Services.AddVersionedApiExplorer(options =>
 {
     // Define the format of the API version in generated SwaggerDoc name.
     options.GroupNameFormat = "'v'VVV";
-
     // Substitute the version in the URL with the actual API version.
     options.SubstituteApiVersionInUrl = true;
 });
